@@ -5,7 +5,7 @@ import { doctors } from '../constants/doctors'
 
 const Doctors = () => {
   return (
-    <div className="container mx-auto py-16">
+    <div className="container mt-10 mx-auto py-16">
       <h1 className="text-3xl font-semibold mb-8 text-center">Our Doctors</h1>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
         {doctors.map((doctor) => (
