@@ -123,17 +123,7 @@ const BookConsultation = () => {
 
   return (
     <>
-      {!isLoggedIn ? (
-        <div className="flex flex-col items-center justify-center h-screen bg-slate-50">
-          <div className="text-center p-8 bg-white rounded-lg shadow-md">
-            <h2 className="text-2xl font-semibold mb-4">Login Required</h2>
-            <p className="mb-6 text-gray-600">Please log in to book a consultation with our medical specialists.</p>
-            <Button onClick={() => navigate("/login")} className="bg-blue-600 hover:bg-blue-700">
-              Login to Continue
-            </Button>
-          </div>
-        </div>
-      ) : (
+      
         <div className="container mx-auto py-10 px-4">
           <h1 className="text-3xl font-semibold mb-8 text-center">Book a Consultation</h1>
 
@@ -236,7 +226,7 @@ const BookConsultation = () => {
             </DialogContent>
           </Dialog>
         </div>
-      )}
+      
     </>
   );
 };
