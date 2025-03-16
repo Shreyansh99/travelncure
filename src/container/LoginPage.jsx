@@ -62,11 +62,11 @@ const LoginPage = () => {
           <CardDescription className="text-center">Login to access your medical tourism portal</CardDescription>
         </CardHeader>
         <CardContent>
-          {error && (
-            <Alert variant="destructive" className="mb-4 border-red-500 text-red-500 bg-red-50">
-              <AlertDescription>{error}</AlertDescription>
-            </Alert>
-          )}
+{/*           {error && (
+            // <Alert variant="destructive" className="mb-4 border-red-500 text-red-500 bg-red-50">
+            //   <AlertDescription>{error}</AlertDescription>
+            // </Alert>
+          )} */}
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="space-y-2">
               <Label htmlFor="email">Email</Label>
