@@ -5,7 +5,7 @@ import { hospitals } from '../constants/hospitals'
 
 const Hospitals = () => {
   return (
-    <div className="container mt-10 mx-auto py-30 p-3">
+    <div className="container mt-2 mx-auto py-30 p-3">
       <h1 className="text-3xl font-semibold mb-8 text-center">Explore Hospitals</h1>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
         {hospitals.map((hospital) => (
