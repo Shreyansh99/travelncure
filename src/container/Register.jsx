@@ -18,7 +18,7 @@ const Register = () => {
     firstName: "",
     lastName: "",
     email: "",
-    contact: "",
+    phone: "", // ✅ Changed from 'contact' to 'phone' to match backend
     password: "",
   });
   const [loading, setLoading] = useState(false);
@@ -35,7 +35,7 @@ const Register = () => {
 
     try {
       const response = await fetch(
-        "https://medical-tourism-lqcu.onrender.com/api/patient/register",
+        "https://medical-tourism-lqcu.onrender.com/auth/register", // ✅ Corrected API URL
         {
           method: "POST",
           headers: {
@@ -48,7 +48,7 @@ const Register = () => {
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(data.message || "Registration failed");
+        throw new Error(data.message || "Registration failed. Try again.");
       }
 
       // ✅ Navigate to login page after successful registration
@@ -107,13 +107,13 @@ const Register = () => {
               />
             </div>
             <div className="grid gap-2">
-              <Label htmlFor="contact">Contact Number</Label>
+              <Label htmlFor="phone">Phone Number</Label>
               <Input
-                id="contact"
-                name="contact"
+                id="phone"
+                name="phone"
                 type="text"
-                placeholder="Contact Number"
-                value={formData.contact}
+                placeholder="Phone Number"
+                value={formData.phone}
                 onChange={handleChange}
                 required
               />
