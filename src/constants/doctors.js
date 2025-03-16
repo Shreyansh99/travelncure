@@ -22,9 +22,9 @@ export const doctors = [
     },
     {
       id: "4",
-      name: "Dr. Ravi Saha",
+      name: "Dr. Ravi Singh",
       specialization: "Neurology",
       description: "Focuses on bone and joint health, including surgeries.",
-      image: "https://yapita-production.s3.ap-south-1.amazonaws.com/uploads/doctor/image/630521e5-ff24-4ad3-bced-ac9a3c42b4b3/file.jpeg", 
+      image: "https://yapita-production.s3.ap-south-1.amazonaws.com/uploads/doctor/image/b6f19e91-fd54-4eed-9cc3-73b507cabfd9/file.jpeg", 
     },
   ];
