@@ -11,8 +11,8 @@ const Hospitals = () => {
         {hospitals.map((hospital) => (
           <Card key={hospital.id} className="shadow-md shadow-blue-500/50">
             <CardHeader>
-              <CardTitle className="text-lg">{hospital.name}</CardTitle>
-              <CardDescription className="text-md">{hospital.location}</CardDescription>
+              <CardTitle className="text-lg text-center">{hospital.name}</CardTitle>
+              <CardDescription className="text-md text-center">{hospital.location}</CardDescription>
             </CardHeader>
             <CardContent className="flex flex-col justify-center items-center">
               <img src={hospital.image} alt={hospital.name} className="mb-4 rounded-md w-80 h-50 " />
