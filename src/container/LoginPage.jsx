@@ -36,7 +36,7 @@ const LoginPage = () => {
       }
 
       // ✅ Redirect to dashboard on success
-      navigate("/dashboard");
+      navigate("/profile/edit");
     } catch (error: any) {
       setError(error.message);
     } finally {
