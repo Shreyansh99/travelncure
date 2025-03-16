@@ -3,7 +3,6 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { Alert, AlertDescription } from "@/components/ui/alert";
 import { Eye, EyeOff, LogIn, Mail, Lock } from "lucide-react";
 import { Checkbox } from "@/components/ui/checkbox";
 
@@ -35,7 +34,7 @@ const LoginPage = () => {
       if (!response.ok) {
         throw new Error(data.message || "Login failed. Try again.");
       }
-      // Navigate programmatically without react-router-dom
+      // Navigate programmatically
       window.location.href = "/profile/edit";
     } catch (error) {
       setError(error.message);
@@ -44,7 +43,7 @@ const LoginPage = () => {
     }
   };
 
-  // Navigation helpers without using react-router-dom
+  // Navigation helper
   const navigateTo = (path) => {
     window.location.href = path;
   };
@@ -62,11 +61,11 @@ const LoginPage = () => {
           <CardDescription className="text-center">Login to access your medical tourism portal</CardDescription>
         </CardHeader>
         <CardContent>
-{/*           {error && (
-            // <Alert variant="destructive" className="mb-4 border-red-500 text-red-500 bg-red-50">
-            //   <AlertDescription>{error}</AlertDescription>
-            // </Alert>
-          )} */}
+          {error && (
+            <div className="mb-4 p-3 rounded-md border border-red-500 text-red-500 bg-red-50">
+              {error}
+            </div>
+          )}
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="space-y-2">
               <Label htmlFor="email">Email</Label>
