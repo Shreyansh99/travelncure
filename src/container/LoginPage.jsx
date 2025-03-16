@@ -1,81 +1,153 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { Eye, EyeOff, LogIn, Mail, Lock } from "lucide-react";
+import { Checkbox } from "@/components/ui/checkbox";
 
 const LoginPage = () => {
-  const navigate = useNavigate();
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+  const [rememberMe, setRememberMe] = useState(false);
 
-  const handleChange = (e) => {  // ✅ Remove TypeScript types for JSX
-  setFormData({ ...formData, [e.target.name]: e.target.value });
-};
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
     setError("");
-
     try {
       const response = await fetch("https://medical-tourism-lqcu.onrender.com/api/patient/login", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        credentials: "include", // ✅ Ensures cookies are sent with request
+        credentials: "include",
         body: JSON.stringify(formData),
       });
-
       const data = await response.json();
-
       if (!response.ok) {
         throw new Error(data.message || "Login failed. Try again.");
       }
-
-      // ✅ Redirect to dashboard on success
-      navigate("/profile/edit");
+      // Navigate programmatically without react-router-dom
+      window.location.href = "/profile/edit";
     } catch (error) {
-      setError(error);
+      setError(error.message);
     } finally {
       setLoading(false);
     }
   };
 
+  // Navigation helpers without using react-router-dom
+  const navigateTo = (path) => {
+    window.location.href = path;
+  };
+
   return (
-    <div className="space-y-4">
-      {error && <p className="text-red-500">{error}</p>}
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <div className="grid gap-2">
-          <Label htmlFor="email">Email</Label>
-          <Input
-            id="email"
-            name="email"
-            type="email"
-            placeholder="patient@example.com"
-            value={formData.email}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div className="grid gap-2">
-          <Label htmlFor="password">Password</Label>
-          <Input
-            id="password"
-            name="password"
-            type="password"
-            placeholder="Enter Password"
-            value={formData.password}
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <Button type="submit" className="w-full" disabled={loading}>
-          {loading ? "Logging in..." : "Login"}
-        </Button>
-      </form>
+    <div className="flex min-h-screen items-center justify-center bg-slate-50 p-4">
+      <Card className="w-full max-w-md shadow-lg">
+        <CardHeader className="space-y-2">
+          <div className="flex justify-center mb-4">
+            <div className="bg-blue-500 rounded-full p-3">
+              <LogIn className="h-6 w-6 text-white" />
+            </div>
+          </div>
+          <CardTitle className="text-center text-2xl font-bold">Welcome to TravelCure</CardTitle>
+          <CardDescription className="text-center">Login to access your medical tourism portal</CardDescription>
+        </CardHeader>
+        <CardContent>
+          {error && (
+            <Alert variant="destructive" className="mb-4 border-red-500 text-red-500 bg-red-50">
+              <AlertDescription>{error}</AlertDescription>
+            </Alert>
+          )}
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <div className="space-y-2">
+              <Label htmlFor="email">Email</Label>
+              <div className="relative">
+                <span className="absolute left-3 top-2.5 text-gray-400">
+                  <Mail size={18} />
+                </span>
+                <Input
+                  id="email"
+                  name="email"
+                  type="email"
+                  className="pl-10"
+                  placeholder="patient@example.com"
+                  value={formData.email}
+                  onChange={handleChange}
+                  required
+                />
+              </div>
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="password">Password</Label>
+              <div className="relative">
+                <span className="absolute left-3 top-2.5 text-gray-400">
+                  <Lock size={18} />
+                </span>
+                <Input
+                  id="password"
+                  name="password"
+                  type={showPassword ? "text" : "password"}
+                  className="pl-10 pr-10"
+                  placeholder="Enter Password"
+                  value={formData.password}
+                  onChange={handleChange}
+                  required
+                />
+                <button
+                  type="button"
+                  className="absolute right-3 top-2.5 text-gray-400 hover:text-gray-600"
+                  onClick={() => setShowPassword(!showPassword)}
+                >
+                  {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                </button>
+              </div>
+            </div>
+            <div className="flex items-center justify-between">
+              <div className="flex items-center space-x-2">
+                <Checkbox 
+                  id="remember" 
+                  checked={rememberMe} 
+                  onCheckedChange={setRememberMe} 
+                />
+                <Label htmlFor="remember" className="text-sm cursor-pointer">Remember me</Label>
+              </div>
+              <Button 
+                variant="link" 
+                className="p-0 h-auto text-sm" 
+                type="button"
+                onClick={() => navigateTo("/forgot-password")}
+              >
+                Forgot password?
+              </Button>
+            </div>
+            <Button type="submit" className="w-full" disabled={loading}>
+              {loading ? "Logging in..." : "Login"}
+            </Button>
+          </form>
+        </CardContent>
+        <CardFooter className="flex justify-center border-t p-4">
+          <div className="text-sm text-center">
+            Don't have an account?{" "}
+            <Button 
+              variant="link" 
+              className="p-0 h-auto" 
+              type="button"
+              onClick={() => navigateTo("/register")}
+            >
+              Sign up
+            </Button>
+          </div>
+        </CardFooter>
+      </Card>
     </div>
   );
 };
