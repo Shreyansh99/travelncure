@@ -4,14 +4,12 @@ import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Eye, EyeOff, LogIn, Mail, Lock } from "lucide-react";
-import { Checkbox } from "@/components/ui/checkbox";
 
 const LoginPage = () => {
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  const [rememberMe, setRememberMe] = useState(false);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -110,15 +108,7 @@ const LoginPage = () => {
                 </button>
               </div>
             </div>
-            <div className="flex items-center justify-between">
-              <div className="flex items-center space-x-2">
-                <Checkbox 
-                  id="remember" 
-                  checked={rememberMe} 
-                  onCheckedChange={setRememberMe} 
-                />
-                <Label htmlFor="remember" className="text-sm cursor-pointer">Remember me</Label>
-              </div>
+            <div className="flex justify-end">
               <Button 
                 variant="link" 
                 className="p-0 h-auto text-sm" 
