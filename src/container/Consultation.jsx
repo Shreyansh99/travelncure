@@ -50,7 +50,7 @@ const BookConsultation = () => {
       }
 
       const response = await axios.post(
-        "https://backend-travelncure.onrender.com/api/patient/consultation",
+        "https://medical-tourism-lqcu.onrender.com/api/patient/consultation",
         formData,
         { headers: { "Content-Type": "multipart/form-data" } }
       );
