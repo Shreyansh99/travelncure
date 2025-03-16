@@ -11,7 +11,7 @@ import { toast } from "sonner";
 const BookConsultation = () => {
   const navigate = useNavigate();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [selectedDepartment, setSelectedDepartment] = useState(null);
   const [selectedTreatment, setSelectedTreatment] = useState(null);
   const [medicalReports, setMedicalReports] = useState(null);
