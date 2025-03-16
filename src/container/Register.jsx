@@ -35,7 +35,7 @@ const Register = () => {
 
     try {
       const response = await fetch(
-        "https://medical-tourism-lqcu.onrender.com/auth/register", // ✅ Corrected API URL
+        "https://medical-tourism-lqcu.onrender.com/api/patient/register", // ✅ Corrected API URL
         {
           method: "POST",
           headers: {
