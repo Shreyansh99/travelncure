@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { Button } from "@/components/ui/button";
@@ -6,10 +6,12 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { departments, treatments } from "@/constants/departments";
+import { toast } from "sonner";
 
 const BookConsultation = () => {
   const navigate = useNavigate();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [selectedDepartment, setSelectedDepartment] = useState(null);
   const [selectedTreatment, setSelectedTreatment] = useState(null);
   const [medicalReports, setMedicalReports] = useState(null);
@@ -17,6 +19,25 @@ const BookConsultation = () => {
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
+
+  // Check authentication status when component mounts
+  // useEffect(() => {
+  //   const checkAuthStatus = async () => {
+  //     try {
+  //       const response = await axios.get(
+  //         "https://medical-tourism-lqcu.onrender.com/api/patient/check-auth", 
+  //         { withCredentials: true }
+  //       );
+  //       setIsLoggedIn(true);
+  //     } catch (error) {
+  //       setIsLoggedIn(false);
+  //     } finally {
+  //       setIsLoading(false);
+  //     }
+  //   };
+
+  //   checkAuthStatus();
+  // }, []);
 
   const handleDepartmentClick = (department) => {
     setSelectedDepartment(department);
@@ -28,12 +49,26 @@ const BookConsultation = () => {
   };
 
   const handleFileChange = (e) => {
-    setMedicalReports(e.target.files[0]);
+    const file = e.target.files[0];
+    
+    // Basic file validation
+    if (file && file.size > 10 * 1024 * 1024) {
+      setMessage("File size should be less than 10MB");
+      return;
+    }
+    
+    setMedicalReports(file);
+    setMessage("");
   };
 
   const handleSubmit = async () => {
     if (!selectedDepartment || !selectedTreatment) {
       setMessage("Please select a department and treatment.");
+      return;
+    }
+
+    if (!medicalCondition.trim()) {
+      setMessage("Please provide a brief description of your medical condition.");
       return;
     }
 
@@ -52,50 +87,75 @@ const BookConsultation = () => {
       const response = await axios.post(
         "https://medical-tourism-lqcu.onrender.com/api/patient/consultation",
         formData,
-        { headers: { "Content-Type": "multipart/form-data" } }
+        { 
+          headers: { "Content-Type": "multipart/form-data" },
+          withCredentials: true // Include cookies for authentication
+        }
       );
 
-      setMessage(response.data.message || "Consultation request submitted successfully!");
+      setMessage("Consultation request submitted successfully!");
+      toast.success("Consultation request submitted!");
       setShowConfirmation(true);
+      
+      // Reset form
       setSelectedDepartment(null);
       setSelectedTreatment(null);
       setMedicalCondition("");
       setMedicalReports(null);
     } catch (error) {
-      setMessage(error.response?.data?.message || "Something went wrong.");
+      const errorMessage = error.response?.data?.message || "Something went wrong. Please try again.";
+      setMessage(errorMessage);
+      toast.error(errorMessage);
     }
 
     setLoading(false);
   };
 
+  if (isLoading) {
+    return (
+      <div className="flex items-center justify-center h-screen">
+        <div className="text-center">
+          <p className="mb-4">Loading...</p>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <>
       {!isLoggedIn ? (
-        <div className="flex items-center justify-center h-screen">
-          <div className="text-center">
-            <p className="mb-4">Please log in to book a consultation.</p>
-            <Button onClick={() => navigate("/login")}>Login</Button>
+        <div className="flex flex-col items-center justify-center h-screen bg-slate-50">
+          <div className="text-center p-8 bg-white rounded-lg shadow-md">
+            <h2 className="text-2xl font-semibold mb-4">Login Required</h2>
+            <p className="mb-6 text-gray-600">Please log in to book a consultation with our medical specialists.</p>
+            <Button onClick={() => navigate("/login")} className="bg-blue-600 hover:bg-blue-700">
+              Login to Continue
+            </Button>
           </div>
         </div>
       ) : (
-        <div className="container mx-auto py-10">
+        <div className="container mx-auto py-10 px-4">
           <h1 className="text-3xl font-semibold mb-8 text-center">Book a Consultation</h1>
 
-          {message && <p className="text-center text-red-600">{message}</p>}
+          {message && (
+            <div className={`p-4 mb-6 rounded-md text-center ${message.includes("success") ? "bg-green-100 text-green-700" : "bg-red-100 text-red-700"}`}>
+              {message}
+            </div>
+          )}
 
-          <div className="h-[50vh] py-8 flex flex-col items-center bg-[#071e3f] text-white">
+          <div className="py-8 flex flex-col items-center bg-[#071e3f] text-white rounded-lg">
             <h2 className="text-2xl font-semibold mb-6 uppercase">Departments</h2>
-            <div className="flex space-x-4 overflow-x-auto scroll-smooth">
+            <div className="flex flex-wrap justify-center gap-6 px-4">
               {departments.map((dept, index) => (
                 <div
                   key={index}
-                  className={`flex flex-col items-center justify-center w-[150px] h-[150px] p-4 border rounded-full shadow cursor-pointer ${
-                    selectedDepartment === dept.name ? "border-blue-500" : ""
+                  className={`flex flex-col items-center justify-center w-[150px] h-[150px] p-4 border rounded-full shadow cursor-pointer transition-all ${
+                    selectedDepartment === dept.name ? "border-blue-400 bg-blue-900" : "hover:bg-blue-900/50"
                   }`}
                   onClick={() => handleDepartmentClick(dept.name)}
                 >
                   <img src={dept.icon} alt={dept.name} className="h-16 w-16 mb-2" />
-                  <span className="text-md font-medium">{dept.name}</span>
+                  <span className="text-md font-medium text-center">{dept.name}</span>
                 </div>
               ))}
             </div>
@@ -106,12 +166,12 @@ const BookConsultation = () => {
               <h2 className="text-2xl font-semibold mb-4 text-center">
                 Treatments under {selectedDepartment}
               </h2>
-              <div className="flex space-x-4 overflow-x-auto scroll-smooth justify-center">
+              <div className="flex flex-wrap gap-4 justify-center">
                 {treatments[selectedDepartment]?.map((subcategory, index) => (
                   <div
                     key={index}
-                    className={`flex flex-col items-center justify-center w-[150px] h-[150px] p-4 border rounded-full shadow-md cursor-pointer text-center ${
-                      selectedTreatment === subcategory ? "bg-blue-200" : "bg-amber-50"
+                    className={`flex flex-col items-center justify-center w-[150px] h-[150px] p-4 border rounded-full shadow-md cursor-pointer text-center transition-all ${
+                      selectedTreatment === subcategory ? "bg-blue-200 border-blue-400" : "bg-amber-50 hover:bg-amber-100"
                     }`}
                     onClick={() => handleSubcategoryClick(subcategory)}
                   >
@@ -121,44 +181,60 @@ const BookConsultation = () => {
               </div>
 
               {selectedTreatment && (
-                <div className="my-8 mx-auto">
+                <div className="my-8 mx-auto max-w-md bg-white p-6 rounded-lg shadow-md">
                   <h2 className="text-2xl font-semibold mb-4">{selectedTreatment}</h2>
 
                   <div className="flex flex-col space-y-4">
                     <div>
-                      <Label htmlFor="reports">Upload Medical Reports (PDF)</Label>
-                      <Input type="file" id="reports" accept="application/pdf" onChange={handleFileChange} />
+                      <Label htmlFor="reports" className="mb-2 block">Upload Medical Reports (PDF)</Label>
+                      <Input 
+                        type="file" 
+                        id="reports" 
+                        accept="application/pdf" 
+                        onChange={handleFileChange} 
+                        className="cursor-pointer"
+                      />
+                      <p className="text-xs text-gray-500 mt-1">Maximum file size: 10MB</p>
                     </div>
 
                     <div>
-                      <Label htmlFor="condition">Brief Medical Condition</Label>
+                      <Label htmlFor="condition" className="mb-2 block">Brief Medical Condition</Label>
                       <textarea
                         id="condition"
-                        className="w-full p-2 border rounded-md"
+                        className="w-full p-2 border rounded-md min-h-[120px]"
                         value={medicalCondition}
                         onChange={(e) => setMedicalCondition(e.target.value)}
+                        placeholder="Please describe your condition, symptoms, and any relevant medical history..."
                       />
                     </div>
 
-                    <Button onClick={handleSubmit} disabled={loading} className="w-full bg-blue-600 hover:bg-blue-700">
+                    <Button 
+                      onClick={handleSubmit} 
+                      disabled={loading} 
+                      className="w-full bg-blue-600 hover:bg-blue-700 mt-4"
+                    >
                       {loading ? "Submitting..." : "Submit Consultation"}
                     </Button>
                   </div>
-
-                  <Dialog open={showConfirmation} onOpenChange={setShowConfirmation}>
-                    <DialogContent>
-                      <DialogHeader>
-                        <DialogTitle>Confirmation</DialogTitle>
-                        <DialogDescription>
-                          Thanks for submitting your consultation request! Our team will get back to you soon.
-                        </DialogDescription>
-                      </DialogHeader>
-                    </DialogContent>
-                  </Dialog>
                 </div>
               )}
             </div>
           )}
+
+          <Dialog open={showConfirmation} onOpenChange={setShowConfirmation}>
+            <DialogContent>
+              <DialogHeader>
+                <DialogTitle>Consultation Request Submitted</DialogTitle>
+                <DialogDescription>
+                  <p className="mb-4">Thanks for submitting your consultation request! Our medical team will review your information and get back to you within 24-48 hours.</p>
+                  <p>You can track the status of your consultation in your patient dashboard.</p>
+                </DialogDescription>
+              </DialogHeader>
+              <div className="flex justify-end">
+                <Button onClick={() => navigate("/")}>Back</Button>
+              </div>
+            </DialogContent>
+          </Dialog>
         </div>
       )}
     </>
