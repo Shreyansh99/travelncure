@@ -11,8 +11,8 @@ const Doctors = () => {
         {doctors.map((doctor) => (
           <Card key={doctor.id} className="shadow-md shadow-blue-500/50">
             <CardHeader>
-              <CardTitle className="text-lg">{doctor.name}</CardTitle>
-              <CardDescription className="text-md">{doctor.specialization}</CardDescription>
+              <CardTitle className="text-lg text-center">{doctor.name}</CardTitle>
+              <CardDescription className="text-md text-center">{doctor.specialization}</CardDescription>
             </CardHeader>
              <CardContent className="flex flex-col justify-center items-center">
               <img
