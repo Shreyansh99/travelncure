@@ -8,7 +8,7 @@ import ContactInfo from "./components/contactSection";
 import Hospitals from "./container/Hospitals";
 import Doctors from "./container/Doctors";
 import BookConsultation from "./container/Consultation";
-import Footer from "./components/Footer";
+import Footer from "./components/footerSection";
 import About from "./container/about";
 import HowItWorks from "./container/howItWork"
 
