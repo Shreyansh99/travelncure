@@ -1,15 +1,16 @@
-import Navbar from "./components/Navbar";
+import Navbar from "./components/nav";
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
 import Home from "./container/Home";
 import Login from "./container/LoginPage";
 import Register from "./container/Register";
 import EditProfile from "./container/EditProfile";
-import ContactInfo from "./components/Contact";
+import ContactInfo from "./components/contactSection";
 import Hospitals from "./container/Hospitals";
 import Doctors from "./container/Doctors";
 import BookConsultation from "./container/Consultation";
-import Footer from "./components/Footer";
-import WhyUs from "./container/whyUs";
+import Footer from "./components/footersection";
+import About from "./container/about";
+import HowItWorks from "./container/howItWork"
 
 function App() {
   return (
@@ -19,7 +20,8 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/about" element={<WhyUs />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/works" element={<HowItWorks />} />
         <Route path="/contact" element={<ContactInfo />} />
         <Route path="/hospitals" element={<Hospitals />} />
         <Route path="/doctors" element={<Doctors />} />

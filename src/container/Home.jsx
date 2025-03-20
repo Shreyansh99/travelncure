@@ -1,8 +1,9 @@
 import React from 'react';
-import Hero from './Hero'
-import WhyUs from './whyUs'
-import Contact from '../components/Contact'
-import Dept from '../components/DepartmentTab'
+import Hero from './heroo'
+import WhyUs from './about'
+import ContactInfo from "../components/contactSection";
+import Dept from '../components/departmentSec'
+import HowItWorks from "./howItWork"
 
 const Home = () => {
   return (
@@ -10,7 +11,8 @@ const Home = () => {
       <Hero />
       <WhyUs />
       <Dept />
-      <Contact />
+      <HowItWorks />
+      <ContactInfo />
     </div>
   );
 };
