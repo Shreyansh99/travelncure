@@ -1,27 +1,58 @@
-import React from 'react';
-import { Phone, Mail, MapPin } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import React from "react";
+import { Phone, Mail, MapPin } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
     <footer className="bg-blue-600 text-white">
       <div className="mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="grid md:grid-cols-3 mx-auto w-auto px-5">
-          <div className='flex flex-col'>
+        <div className="grid md:grid-cols-3 gap-8 mx-auto w-full px-5">
+          <div className="flex flex-col">
             <h3 className="text-xl font-bold mb-4">TravelCure</h3>
-            <p className="text-blue-100 w-2/3">Your trusted partner in medical tourism, combining world-class healthcare with exceptional travel experiences.</p>
+            <p className="text-blue-100 w-2/3">
+              Your trusted partner in medical tourism, combining world-class
+              healthcare with exceptional travel experiences.
+            </p>
           </div>
-          
-          <div className='pl-20'>
+
+          <div className="md:pl-0">
             <h4 className="text-lg font-semibold mb-4">Quick Links</h4>
             <ul className="space-y-2">
-              <li><Link to="/" className="text-blue-100 hover:text-white transition-colors">Home</Link></li>
-              <li><Link to="/hospitals" className="text-blue-100 hover:text-white transition-colors">Hospitals</Link></li>
-              <li><Link to="/about" className="text-blue-100 hover:text-white transition-colors">About Us</Link></li>
-              <li><Link to="/contact" className="text-blue-100 hover:text-white transition-colors">Contact</Link></li>
+              <li>
+                <Link
+                  to="/"
+                  className="text-blue-100 hover:text-white transition-colors"
+                >
+                  Home
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/hospitals"
+                  className="text-blue-100 hover:text-white transition-colors"
+                >
+                  Hospitals
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/about"
+                  className="text-blue-100 hover:text-white transition-colors"
+                >
+                  About Us
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/contact"
+                  className="text-blue-100 hover:text-white transition-colors"
+                >
+                  Contact
+                </Link>
+              </li>
             </ul>
           </div>
-          
+
           <div>
             <h4 className="text-lg font-semibold mb-4">Contact Us</h4>
             <ul className="space-y-2">
@@ -39,7 +70,7 @@ const Footer = () => {
               </li>
             </ul>
           </div>
-          
+
           {/* <div>
             <h4 className="text-lg font-semibold mb-4">Newsletter</h4>
             <p className="text-blue-100 mb-4">Subscribe to our newsletter for the latest updates and offers.</p>
@@ -54,11 +85,12 @@ const Footer = () => {
               </button>
             </div>
           </div>*/}
+        </div>
 
-        </div> 
-        
         <div className="border-t border-blue-400 mt-8 pt-8 text-center">
-          <p className="text-blue-100">&copy; {new Date().getFullYear()} TravelNCure. All rights reserved.</p>
+          <p className="text-blue-100">
+            &copy; {new Date().getFullYear()} TravelNCure. All rights reserved.
+          </p>
         </div>
       </div>
     </footer>
