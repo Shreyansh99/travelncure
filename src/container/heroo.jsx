@@ -54,22 +54,22 @@ const Hero = () => {
           className="hero-content flex-1 text-center md:text-left space-y-6 pt-16 md:pt-20 text-white"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
+{/*           transition={{ duration: 0.8, delay: 0.2 }} */}
         >
-          <motion.div
+{/*           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 1, delay: 0.3 }}
             className="inline-block px-3 py-1 mb-2 text-xs font-medium bg-primary/20 rounded-full text-white"
           >
             International Medical Tourism
-          </motion.div>
+          </motion.div> */}
           
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold leading-tight tracking-tight">
             <motion.span
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.4 }}
+{/*               transition={{ duration: 0.7, delay: 0.4 }} */}
               className="block"
             >
               Your Health,
@@ -77,7 +77,7 @@ const Hero = () => {
             <motion.span
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.7, delay: 0.6 }}
+{/*               transition={{ duration: 0.7, delay: 0.6 }} */}
               className="block text-[#64B5F6]"
             >
               Our Priority
@@ -88,7 +88,7 @@ const Hero = () => {
             className="text-lg md:text-xl text-white/80 max-w-xl mx-auto md:mx-0"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ duration: 1, delay: 1 }}
+{/*             transition={{ duration: 1, delay: 1 }} */}
           >
             Find the best medical treatments and destinations worldwide. We provide expert guidance for your healthcare journey.
           </motion.p>
@@ -97,7 +97,7 @@ const Hero = () => {
             className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start mt-8"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 1.2 }}
+            // transition={{ duration: 0.7, delay: 1.2 }}
           >
             <Link to="/consultation">
               <Button size="lg" className="rounded-full px-8 text-base h-12 shadow-lg shadow-primary/20 bg-blue-600 hover:bg-[#1A5A91]">
