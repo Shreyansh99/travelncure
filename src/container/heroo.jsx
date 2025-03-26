@@ -56,14 +56,14 @@ const Hero = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.2 }}
         >
-          {/* <motion.div
+          <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 1, delay: 0.3 }}
             className="inline-block px-3 py-1 mb-2 text-xs font-medium bg-primary/20 rounded-full text-white"
           >
             International Medical Tourism
-          </motion.div> */}
+          </motion.div>
           
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-display font-bold leading-tight tracking-tight">
             <motion.span
